@@ -7,13 +7,33 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 > The application is built by following chapters of [Android Programming: The Big Nerd Ranch Guide](https://learning.oreilly.com/library/view/android-programming-the/9780135257555/).
 
-## Task:
-- [ ] Chapter 8
-- [ ] Chapter 9
-- [ ] Chapter 10
-- [ ] Chapter 11
-- [ ] Chapter 12
-- [ ] Chapter 13
-- [ ] Chapter 14
+## Chapters:
+
+- [ ] Chapter 8: UI Fragments and the FragmentManager - Building 'subroutines' in the GUI
+
+- [ ] Chapter 9: Displaying Lists with RecyclerView - A complex widget with great usefulness
+
+- [ ] Chapter 10: Creating User Interfaces with Layouts and Widgets - A flexible way to build the UI
+
+- [ ] Chapter 11: Databases and the Room Library - Storing app data to a database
+
+- [ ] Chapter 12: Fragment Navigation - Moving from one fragment to another
+
+- [ ] Chapter 13: Dialogs - Pop-up Fragments for collecting user input
+
+- [ ] Chapter 14: The App Bar - Building menus
 
 ## Challenges:
+
+- [ ] RecyclerView ViewTypes (page 193)
+
+- [ ] Formatting the Date (page 220)
+
+- [ ] More Dialogs (page 274)
+
+- [ ] Empty View (page 290)
+
+- [ ] Multiple Main Activities (this isn't from the book, this is one I made up) The book mentioned that on a tablet, you could have both the list view and the detailed view fragments running at the same time. The challenge is to do that!
+
+- [ ] Name Your Challenge: If you have a great idea for adding to the app, run the idea by me. If it
+sounds good, implementing the idea would count as a challenge!
