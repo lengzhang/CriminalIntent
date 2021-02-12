@@ -1,8 +1,7 @@
 package com.lengzhang.android.criminalintent
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 
 private const val TAG = "MainActivity"
 
@@ -13,15 +12,12 @@ class MainActivity : AppCompatActivity() {
 
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
-        Log.d(TAG, "1")
         if (currentFragment == null) {
-            Log.d(TAG, "is null")
-            val fragment = CrimeFragment()
+            val fragment = CrimeListFragment.newInstance()
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit()
+                .beginTransaction()
+                .add(R.id.fragment_container, fragment)
+                .commit()
         }
-        Log.d(TAG, "2")
     }
 }
