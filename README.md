@@ -9,7 +9,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 ## Chapters:
 
-- [ ] Chapter 8: UI Fragments and the FragmentManager - Building 'subroutines' in the GUI
+- [x] Chapter 8: UI Fragments and the FragmentManager - Building 'subroutines' in the GUI
 
 - [ ] Chapter 9: Displaying Lists with RecyclerView - A complex widget with great usefulness
 
