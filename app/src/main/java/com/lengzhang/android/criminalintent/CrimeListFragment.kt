@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -74,20 +75,68 @@ class CrimeListFragment : Fragment() {
         }
     }
 
+    private inner class CrimeHolderPolice(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+
+        private lateinit var crime: Crime
+
+        val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
+        val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+        val contactPoliceButton: Button = itemView.findViewById(R.id.contact_police_button)
+
+        init {
+            itemView.setOnClickListener(this)
+            contactPoliceButton.setOnClickListener {
+                Toast.makeText(context, "Contact Police!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        fun bind(crime: Crime) {
+            this.crime = crime
+            titleTextView.text = this.crime.title
+            dateTextView.text = this.crime.date.toString()
+        }
+
+        override fun onClick(v: View?) {
+            Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
     private inner class CrimeAdapter(var crimes: List<Crime>) :
-        RecyclerView.Adapter<CrimeHolder>() {
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-                : CrimeHolder {
-            val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
-            return CrimeHolder(view)
+                : RecyclerView.ViewHolder {
+            Log.d(TAG, "onCreateViewHolder $viewType")
+            val view = when (viewType) {
+                1 -> layoutInflater.inflate(R.layout.list_item_crime_police, parent, false)
+                else -> layoutInflater.inflate(R.layout.list_item_crime, parent, false)
+            }
+
+            return when (viewType) {
+                1 -> CrimeHolderPolice(view)
+                else -> CrimeHolder(view)
+            }
         }
+
 
         override fun getItemCount() = crimes.size
 
-        override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
+        override fun getItemViewType(position: Int): Int = when (crimes[position].requiresPolice) {
+            true -> 1
+            else -> 0
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            Log.d(TAG, "onBindViewHolder ${this.getItemViewType(position)}")
             val crime = crimes[position]
-            holder.bind(crime)
+            when (this.getItemViewType(position)) {
+                1 -> (holder as CrimeHolderPolice).bind(crime)
+                else -> (holder as CrimeHolder).bind(crime)
+            }
         }
     }
 

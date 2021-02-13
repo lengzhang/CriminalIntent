@@ -17,4 +17,11 @@
         android:layout_height="wrap_content"
         android:text="@string/crime_date" />
 
+    <Button
+        android:id="@+id/contact_police_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_police" />
+
 </LinearLayout>
