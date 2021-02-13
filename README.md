@@ -13,7 +13,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Chapter 9: Displaying Lists with RecyclerView - A complex widget with great usefulness
 
-- [ ] Chapter 10: Creating User Interfaces with Layouts and Widgets - A flexible way to build the UI
+- [x] Chapter 10: Creating User Interfaces with Layouts and Widgets - A flexible way to build the UI
 
 - [ ] Chapter 11: Databases and the Room Library - Storing app data to a database
 
