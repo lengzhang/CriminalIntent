@@ -21,7 +21,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Chapter 13: Dialogs - Pop-up Fragments for collecting user input
 
-- [ ] Chapter 14: The App Bar - Building menus
+- [x] Chapter 14: The App Bar - Building menus
 
 ## Challenges:
 
