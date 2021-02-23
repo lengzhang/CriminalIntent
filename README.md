@@ -17,7 +17,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Chapter 11: Databases and the Room Library - Storing app data to a database
 
-- [ ] Chapter 12: Fragment Navigation - Moving from one fragment to another
+- [x] Chapter 12: Fragment Navigation - Moving from one fragment to another
 
 - [ ] Chapter 13: Dialogs - Pop-up Fragments for collecting user input
 
