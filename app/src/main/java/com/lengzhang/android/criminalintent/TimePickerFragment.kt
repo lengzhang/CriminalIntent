@@ -1,33 +1,30 @@
 package com.lengzhang.android.criminalintent
 
-import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.os.Bundle
-import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
-private const val ARG_DATE = "date"
+private const val ARG_TIME = "time"
 
-class DatePickerFragment : DialogFragment() {
+class TimePickerFragment : DialogFragment() {
 
     interface Callbacks {
         fun onDateSelected(date: Date)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val date = arguments?.getSerializable(ARG_TIME) as Date
+        val calendar = Calendar.getInstance().apply { time = date }
 
-        val date = arguments?.getSerializable(ARG_DATE) as Date
-        val calendar = Calendar.getInstance().apply {
-            time = date
-        }
-
-        val dateListener =
-            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, day: Int ->
-
+        val timeListener =
+            TimePickerDialog.OnTimeSetListener { _: TimePicker, hour: Int, minute: Int ->
                 val resultCalendar = GregorianCalendar.getInstance().apply {
                     time = date
-                    set(year, month, day)
+                    set(GregorianCalendar.HOUR, hour)
+                    set(GregorianCalendar.MINUTE, minute)
                 }
 
                 val resultDate: Date = resultCalendar.time
@@ -35,24 +32,25 @@ class DatePickerFragment : DialogFragment() {
                 targetFragment?.let { fragment ->
                     (fragment as Callbacks).onDateSelected(resultDate)
                 }
+
             }
 
-        return DatePickerDialog(
+        return TimePickerDialog(
             requireContext(),
-            dateListener,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            timeListener,
+            calendar.get(Calendar.HOUR),
+            calendar.get(Calendar.MINUTE),
+            true
         )
     }
 
     companion object {
-        fun newInstance(date: Date): DatePickerFragment {
+        fun newInstance(date: Date): TimePickerFragment {
             val args = Bundle().apply {
-                putSerializable(ARG_DATE, date)
+                putSerializable(ARG_TIME, date)
             }
 
-            return DatePickerFragment().apply {
+            return TimePickerFragment().apply {
                 arguments = args
             }
         }
