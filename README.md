@@ -19,7 +19,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Chapter 12: Fragment Navigation - Moving from one fragment to another
 
-- [ ] Chapter 13: Dialogs - Pop-up Fragments for collecting user input
+- [x] Chapter 13: Dialogs - Pop-up Fragments for collecting user input
 
 - [ ] Chapter 14: The App Bar - Building menus
 
