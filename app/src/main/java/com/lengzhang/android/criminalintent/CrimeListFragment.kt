@@ -63,8 +63,8 @@ class CrimeListFragment : Fragment() {
             viewLifecycleOwner,
             Observer { crimes ->
                 crimes?.let {
-                    Log.i(TAG, "Got crimes ${crimes.size}")
-                    updateUI(crimes)
+                    Log.i(TAG, "Got crimes ${it.size}")
+                    adapter?.submitList(it)
                 }
             }
         )
@@ -73,11 +73,6 @@ class CrimeListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         callbacks = null
-    }
-
-    private fun updateUI(crimes: List<Crime>) {
-        adapter?.submitList(crimes)
-        crimeRecyclerView.adapter = adapter
     }
 
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view),
