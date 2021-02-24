@@ -24,6 +24,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
+    private lateinit var requiresPolice: CheckBox
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
@@ -45,6 +46,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         titleField = view.findViewById(R.id.crime_title) as EditText
         dateButton = view.findViewById(R.id.crime_date) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
+        requiresPolice = view.findViewById(R.id.crime_requires_police) as CheckBox
 
         return view
     }
@@ -98,6 +100,12 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             }
         }
 
+        requiresPolice.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                crime.requiresPolice = isChecked
+            }
+        }
+
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(crime.date).apply {
                 setTargetFragment(this@CrimeFragment, REQUEST_DATE)
@@ -121,6 +129,10 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         dateButton.text = crime.date.toString()
         solvedCheckBox.apply {
             isChecked = crime.isSolved
+            jumpDrawablesToCurrentState()
+        }
+        requiresPolice.apply {
+            isChecked = crime.requiresPolice
             jumpDrawablesToCurrentState()
         }
     }

@@ -16,7 +16,9 @@
         android:id="@+id/crime_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/crime_title_hint" />
+        android:autofillHints="no"
+        android:hint="@string/crime_title_hint"
+        android:inputType="text" />
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
@@ -35,5 +37,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/crime_solved_label" />
+
+    <CheckBox
+        android:id="@+id/crime_requires_police"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crime_requires_police_label" />
 
 </LinearLayout>

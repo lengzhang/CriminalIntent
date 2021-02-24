@@ -4,10 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +63,7 @@ class CrimeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         crimeListViewModel.crimeListLiveData.observe(
             viewLifecycleOwner,
-            Observer { crimes ->
+            { crimes ->
                 crimes?.let {
                     Log.i(TAG, "Got crimes ${crimes.size}")
                     updateUI(crimes)
@@ -106,20 +107,22 @@ class CrimeListFragment : Fragment() {
         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
         private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+        private val requiresPoliceButton: Button? =
+            itemView.findViewById(R.id.contact_police_button)
 
         init {
             itemView.setOnClickListener(this)
+            requiresPoliceButton?.setOnClickListener {
+                Toast.makeText(context, "Contact Police!", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         fun bind(crime: Crime) {
             this.crime = crime
             titleTextView.text = this.crime.title
             dateTextView.text = this.crime.date.toString()
-            solvedImageView.visibility = if (crime.isSolved) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+            solvedImageView.visibility = if (crime.isSolved) View.VISIBLE else View.GONE
         }
 
         override fun onClick(v: View?) {
@@ -132,11 +135,19 @@ class CrimeListFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
                 : CrimeHolder {
-            val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
+
+            val view = when (viewType) {
+                1 -> layoutInflater.inflate(R.layout.list_item_crime_police, parent, false)
+                else -> layoutInflater.inflate(R.layout.list_item_crime, parent, false)
+            }
+
             return CrimeHolder(view)
         }
 
         override fun getItemCount() = crimes.size
+
+        override fun getItemViewType(position: Int): Int =
+            if (crimes[position].requiresPolice) 1 else 0
 
         override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
             val crime = crimes[position]

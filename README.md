@@ -25,7 +25,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 ## Challenges:
 
-- [ ] RecyclerView ViewTypes (page 193)
+- [x] RecyclerView ViewTypes (page 193)
 
 - [ ] Formatting the Date (page 220)
 
