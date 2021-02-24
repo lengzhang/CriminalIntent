@@ -11,4 +11,13 @@ data class Crime(
     var date: Date = Date(),
     var isSolved: Boolean = false,
     var requiresPolice: Boolean = false
-)
+) {
+    companion object {
+        fun isEqual(a: Crime, b: Crime) = when {
+            a.title != b.title -> false
+            a.date != b.date -> false
+            a.isSolved != b.isSolved -> false
+            else -> true
+        }
+    }
+}
