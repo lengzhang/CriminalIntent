@@ -29,7 +29,7 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Formatting the Date (page 220)
 
-- [ ] More Dialogs (page 274)
+- [x] More Dialogs (page 274)
 
 - [ ] Empty View (page 290)
 
