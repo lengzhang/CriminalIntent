@@ -2,6 +2,7 @@ package com.lengzhang.android.criminalintent
 
 import android.content.Context
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -121,8 +122,10 @@ class CrimeListFragment : Fragment() {
         fun bind(crime: Crime) {
             this.crime = crime
             titleTextView.text = this.crime.title
-            dateTextView.text = this.crime.date.toString()
+//            dateTextView.text = this.crime.date.toString()
+            dateTextView.text = DateFormat.format("EEEE, LLL dd, yyyy", this.crime.date)
             solvedImageView.visibility = if (crime.isSolved) View.VISIBLE else View.GONE
+
         }
 
         override fun onClick(v: View?) {
