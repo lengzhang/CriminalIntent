@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,6 +29,9 @@ class CrimeListFragment : Fragment() {
     private var callbacks: Callbacks? = null
 
     private lateinit var crimeRecyclerView: RecyclerView
+    private lateinit var noCrimesLayout: LinearLayout
+    private lateinit var createCrimeButton: Button
+
     private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
 
     private val crimeListViewModel: CrimeListViewModel by lazy {
@@ -55,6 +60,10 @@ class CrimeListFragment : Fragment() {
             view.findViewById(R.id.crime_recycler_view) as RecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         crimeRecyclerView.adapter = adapter
+
+        noCrimesLayout = view.findViewById(R.id.no_crimes_layout)
+        createCrimeButton = view.findViewById(R.id.create_crime_button)
+
         return view
     }
 
@@ -69,6 +78,10 @@ class CrimeListFragment : Fragment() {
                 }
             }
         )
+
+        createCrimeButton.setOnClickListener {
+            addNewCrime()
+        }
     }
 
     override fun onDetach() {
@@ -84,9 +97,7 @@ class CrimeListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.new_crime -> {
-                val crime = Crime()
-                crimeListViewModel.addCrime(crime)
-                callbacks?.onCrimeSelected(crime.id)
+                addNewCrime()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -96,6 +107,18 @@ class CrimeListFragment : Fragment() {
     private fun updateUI(crimes: List<Crime>) {
         adapter = CrimeAdapter(crimes)
         crimeRecyclerView.adapter = adapter
+
+        if (crimes.isEmpty() && noCrimesLayout.visibility == View.GONE) {
+            noCrimesLayout.visibility = View.VISIBLE
+        } else if (crimes.isNotEmpty() && noCrimesLayout.visibility == View.VISIBLE) {
+            noCrimesLayout.visibility = View.GONE
+        }
+    }
+
+    private fun addNewCrime() {
+        val crime = Crime()
+        crimeListViewModel.addCrime(crime)
+        callbacks?.onCrimeSelected(crime.id)
     }
 
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view),
