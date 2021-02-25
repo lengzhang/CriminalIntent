@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
@@ -32,6 +33,9 @@ class CrimeListFragment : Fragment() {
 
     private lateinit var crimeRecyclerView: RecyclerView
     private var adapter: CrimeListAdapter? = CrimeListAdapter()
+
+    private lateinit var noCrimeLayout: ConstraintLayout
+    private lateinit var addACrimeButton: Button
 
     private val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
@@ -60,6 +64,9 @@ class CrimeListFragment : Fragment() {
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         crimeRecyclerView.adapter = adapter
 
+        noCrimeLayout = view.findViewById(R.id.no_crimes_layout)
+        addACrimeButton = view.findViewById(R.id.add_a_crime_button)
+
         return view
     }
 
@@ -70,10 +77,12 @@ class CrimeListFragment : Fragment() {
             { crimes ->
                 crimes?.let {
                     Log.i(TAG, "Got crimes ${crimes.size}")
-                    adapter?.submitList(crimes)
+                    updateUI(crimes)
                 }
             }
         )
+
+        addACrimeButton.setOnClickListener { addNewCrime() }
     }
 
     override fun onDetach() {
@@ -89,13 +98,26 @@ class CrimeListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.new_crime -> {
-                val crime = Crime()
-                crimeListViewModel.addCrime(crime)
-                callbacks?.onCrimeSelected(crime.id)
+                addNewCrime()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun updateUI(crimes: List<Crime>) {
+        adapter?.submitList(crimes)
+
+        if (crimes.isEmpty() && noCrimeLayout.visibility != ConstraintLayout.VISIBLE)
+            noCrimeLayout.visibility = ConstraintLayout.VISIBLE
+        else if (crimes.isNotEmpty() && noCrimeLayout.visibility != ConstraintLayout.GONE)
+            noCrimeLayout.visibility = ConstraintLayout.GONE
+    }
+
+    private fun addNewCrime() {
+        val crime = Crime()
+        crimeListViewModel.addCrime(crime)
+        callbacks?.onCrimeSelected(crime.id)
     }
 
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view),

@@ -31,9 +31,11 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] More Dialogs (page 274)
 
-- [ ] Empty View (page 290)
+- [x] Empty View (page 290)
 
 - [ ] Multiple Main Activities (this isn't from the book, this is one I made up) The book mentioned that on a tablet, you could have both the list view and the detailed view fragments running at the same time. The challenge is to do that!
 
-- [ ] Name Your Challenge: If you have a great idea for adding to the app, run the idea by me. If it
+- [x] Implement delete crime feature
+
+- [] Name Your Challenge: If you have a great idea for adding to the app, run the idea by me. If it
 sounds good, implementing the idea would count as a challenge!

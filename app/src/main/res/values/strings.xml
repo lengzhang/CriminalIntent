@@ -10,10 +10,11 @@
     <string name="contact_police">Contact Police</string>
     <string name="new_crime">New Crime</string>
     <string name="delete_crime">Delete Crime</string>
+    <string name="no_crime">No Crime</string>
+    <string name="add_a_crime">Add A Crime</string>
 
     <string name="confirm_dialog_default_message">Hello World!!</string>
     <string name="confirm_dialog_default_positive_label">Confirm</string>
     <string name="confirm_dialog_default_negative_label">Cancel</string>
-
     <string name="confirm_dialog_delete_crime">Do you want to delete this crime?</string>
 </resources>
