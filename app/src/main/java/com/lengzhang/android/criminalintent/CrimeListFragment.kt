@@ -59,6 +59,7 @@ class CrimeListFragment : Fragment() {
             view.findViewById(R.id.crime_recycler_view) as RecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         crimeRecyclerView.adapter = adapter
+
         return view
     }
 
@@ -128,31 +129,6 @@ class CrimeListFragment : Fragment() {
             callbacks?.onCrimeSelected(crime.id)
         }
     }
-
-//    private inner class CrimeAdapter(var crimes: List<Crime>) :
-//        RecyclerView.Adapter<CrimeHolder>() {
-//
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-//                : CrimeHolder {
-//
-//            val view = when (viewType) {
-//                1 -> layoutInflater.inflate(R.layout.list_item_crime_police, parent, false)
-//                else -> layoutInflater.inflate(R.layout.list_item_crime, parent, false)
-//            }
-//
-//            return CrimeHolder(view)
-//        }
-//
-//        override fun getItemCount() = crimes.size
-//
-//        override fun getItemViewType(position: Int): Int =
-//            if (crimes[position].requiresPolice) 1 else 0
-//
-//        override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
-//            val crime = crimes[position]
-//            holder.bind(crime)
-//        }
-//    }
 
     private inner class CrimeListAdapter : ListAdapter<Crime, CrimeHolder>(DiffCallback()) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeHolder {

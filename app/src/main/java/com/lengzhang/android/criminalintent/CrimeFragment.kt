@@ -1,12 +1,11 @@
 package com.lengzhang.android.criminalintent
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -18,10 +17,19 @@ private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
 private const val DIALOG_DATE = "DialogDate"
 private const val DIALOG_TIME = "DialogTime"
+private const val DIALOG_CONFIRM_DELETE = "DialogConfirmDelete"
 private const val REQUEST_DATE = 0
 private const val REQUEST_TIME = 1
+private const val REQUEST_CONFIRM_DELETE = 2
 
-class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragment.Callbacks {
+class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragment.Callbacks,
+    ConfirmDialogFragment.Callbacks {
+
+    interface Callbacks {
+        fun onConfirmDeleteCrime()
+    }
+
+    private var callbacks: Callbacks? = null
 
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
@@ -33,11 +41,17 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
         ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         crime = Crime()
         val crimeId: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
         crimeDetailViewModel.loadCrime(crimeId)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -131,9 +145,32 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
         crimeDetailViewModel.saveCrime(crime)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_crime, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete_crime -> {
+                ConfirmDialogFragment.newInstance().apply {
+                    setTargetFragment(this@CrimeFragment, REQUEST_CONFIRM_DELETE)
+                    show(this@CrimeFragment.requireFragmentManager(), DIALOG_CONFIRM_DELETE)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onDateSelected(date: Date) {
         crime.date = date
         updateUI()
+    }
+
+    override fun onConfirmDialogConfirmClicked() {
+        crimeDetailViewModel.deleteCrime(crime)
+        callbacks?.onConfirmDeleteCrime()
     }
 
     private fun updateUI() {
@@ -156,6 +193,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
             val args = Bundle().apply {
                 putSerializable(ARG_CRIME_ID, crimeId)
             }
+
             return CrimeFragment().apply {
                 arguments = args
             }
