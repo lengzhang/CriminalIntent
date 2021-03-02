@@ -37,5 +37,5 @@ With CriminalIntent, you can make a record of a crime including a title, a date,
 
 - [x] Implement delete crime feature
 
-- [] Name Your Challenge: If you have a great idea for adding to the app, run the idea by me. If it
+- [ ] Name Your Challenge: If you have a great idea for adding to the app, run the idea by me. If it
 sounds good, implementing the idea would count as a challenge!
