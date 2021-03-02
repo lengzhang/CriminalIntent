@@ -153,10 +153,11 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.delete_crime -> {
-                ConfirmDialogFragment.newInstance().apply {
-                    setTargetFragment(this@CrimeFragment, REQUEST_CONFIRM_DELETE)
-                    show(this@CrimeFragment.requireFragmentManager(), DIALOG_CONFIRM_DELETE)
-                }
+                ConfirmDialogFragment.newInstance(message = R.string.confirm_dialog_delete_crime)
+                    .apply {
+                        setTargetFragment(this@CrimeFragment, REQUEST_CONFIRM_DELETE)
+                        show(this@CrimeFragment.requireFragmentManager(), DIALOG_CONFIRM_DELETE)
+                    }
                 true
             }
             else -> super.onOptionsItemSelected(item)
