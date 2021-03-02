@@ -16,22 +16,27 @@ class DatePickerFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dateListener =
-            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, day: Int ->
-
-                val resultDate: Date = GregorianCalendar(year, month, day).time
-
-                targetFragment?.let { fragment ->
-                    (fragment as Callbacks).onDateSelected(resultDate)
-                }
-            }
-
         val date = arguments?.getSerializable(ARG_DATE) as Date
-        val calendar = Calendar.getInstance()
-        calendar.time = date
+        val calendar = Calendar.getInstance().apply { time = date }
         val initialYear = calendar.get(Calendar.YEAR)
         val initialMonth = calendar.get(Calendar.MONTH)
         val initialDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val dateListener =
+            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, day: Int ->
+                if (year != initialYear || month != initialMonth || day != initialDay) {
+                    val resultCalendar: Calendar = GregorianCalendar.getInstance().apply {
+                        time = date
+                        set(year, month, day)
+                    }
+
+                    val resultDate: Date = resultCalendar.time
+
+                    targetFragment?.let { fragment ->
+                        (fragment as Callbacks).onDateSelected(resultDate)
+                    }
+                }
+            }
 
         return DatePickerDialog(
             requireContext(),
